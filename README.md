@@ -8,6 +8,7 @@ and Cloudant.
 Copy `config.sample.ini` to `config.ini`.
 Customize it.
 
+    $ pip install easyimap couchdb
     $ python couchmail.py
 
 Hope for the best!
