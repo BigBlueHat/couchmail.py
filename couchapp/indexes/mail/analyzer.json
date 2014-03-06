@@ -1,0 +1,8 @@
+{
+  "name": "perfield",
+  "default": "standard",
+  "fields": {
+    "to": "email",
+    "from": "email"
+  }
+}
