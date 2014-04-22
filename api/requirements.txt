@@ -1,0 +1,2 @@
+aspen>=0.30.0
+requests>=2.2.0
