@@ -58,8 +58,9 @@ Otherwise, run this:
 
 ```
 $ cd api/
-$ pip install -r requirements.txt
-$ python -m aspen
+$ pip install -r requirements.txt --allow-external Cheroot --allow-unverified Cheroot
+$ # sorry about the Cheroot stuff...
+$ python -m aspen.server
 ```
 
 `http://localhost:8080/fauxton` (where `fauxton` is your favorite search terem) should get you some search results.

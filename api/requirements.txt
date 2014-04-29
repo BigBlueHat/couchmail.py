@@ -1,2 +1,4 @@
 aspen>=0.30.0
+aspen-pystache>=0.4
+pygments
 requests>=2.2.0
