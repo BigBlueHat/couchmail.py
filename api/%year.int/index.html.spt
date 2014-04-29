@@ -1,0 +1,42 @@
+import re
+from ConfigParser import ConfigParser
+from datetime import date
+
+from aspen.logging import log
+import requests
+
+config = ConfigParser()
+config.read('../config.ini')
+server = config.get('couch', 'server')
+db = config.get('couch', 'db')
+
+[---]
+year = path['year'] if 'year' in path else date.today().year
+base_url = "{server}{db}/_design/couchmail/_search/mail?counts=[%22subject%22,%20%22to%22,%20%22from%22]&q=date:[{year}01 TO {year}12]".format(server=server, db=db, year=year)
+log(base_url)
+if qs and 'q' in qs:
+  r = requests.get(base_url + ' AND ' + qs['q'])
+  results = r.json()
+else:
+  r = requests.get(base_url)
+  results = r.json()
+
+# obfuscate email addresses
+if 'rows' in results:
+  for row in results['rows']:
+    row['fields']['from'] = re.sub(r'(.*)<(.)(.*)@(.*)>', r'\1<\2...@\4>', row['fields']['from'])
+
+[---] via pystache
+<form method="GET">
+  <input name="q" value="{{qs.q}}" />
+</form>
+
+{{#results}}
+{{results.total_rows}} Search Results
+<ul>
+{{#results.rows}}
+<li><strong>{{fields.subject}}</strong><br />
+From: {{fields.from}}</li>
+{{/results.rows}}
+</ul>
+{{/results}}
