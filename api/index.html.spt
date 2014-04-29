@@ -8,17 +8,21 @@ config = ConfigParser()
 config.read('../config.ini')
 server = config.get('couch', 'server')
 db = config.get('couch', 'db')
+url = ("{server}{db}/_design/couchmail/_search/mail"
+       "?counts=[%22subject%22,%20%22to%22,%20%22from%22]")\
+    .format(server=server, db=db)
 
 [---]
 if qs and 'q' in qs:
-    r = requests.get(server + db + '/_design/couchmail/_search/mail?q=' + qs['q'] + '&counts=[%22subject%22,%20%22to%22,%20%22from%22]')
-    results = r.json()
+    url += "&q=" + qs['q']
+    results = requests.get(url).json()
 else:
-  results = {}
+    results = {}
 
 if 'rows' in results:
     for row in results['rows']:
-        row['fields']['from'] = re.sub(r'(.*)<(.)(.*)@(.*)>', r'\1<\2...@\4>', row['fields']['from'])
+        row['fields']['from'] = re.sub(r'(.*)<(.)(.*)@(.*)>', r'\1<\2...@\4>',
+                                       row['fields']['from'])
 
 [---] via pystache
 <form method="GET">

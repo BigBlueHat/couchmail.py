@@ -9,23 +9,26 @@ config = ConfigParser()
 config.read('../config.ini')
 server = config.get('couch', 'server')
 db = config.get('couch', 'db')
+url = ("{server}{db}/_design/couchmail/_search/mail"
+       "?counts=[%22subject%22,%20%22to%22,%20%22from%22]")\
+    .format(server=server, db=db)
 
 [---]
 year = path['year'] if 'year' in path else date.today().year
 month = path['month'] if 'month' in path else date.today().month
-base_url = "{server}{db}/_design/couchmail/_search/mail?counts=[%22subject%22,%20%22to%22,%20%22from%22]&q=date:[{year}{month} TO {year}{month}]".format(server=server, db=db, year=year, month=month)
-log(base_url)
+url += "&q=date:[{year}{month} TO {year}{month}]"\
+       .format(year=year, month=month)
+
 if qs and 'q' in qs:
-  r = requests.get(base_url + ' AND ' + qs['q'])
-  results = r.json()
-else:
-  r = requests.get(base_url)
-  results = r.json()
+    url += ' AND ' + qs['q']
+
+results = requests.get(url).json()
 
 # obfuscate email addresses
 if 'rows' in results:
-  for row in results['rows']:
-    row['fields']['from'] = re.sub(r'(.*)<(.)(.*)@(.*)>', r'\1<\2...@\4>', row['fields']['from'])
+    for row in results['rows']:
+        row['fields']['from'] = re.sub(r'(.*)<(.)(.*)@(.*)>', r'\1<\2...@\4>',
+                                       row['fields']['from'])
 
 [---] via pystache
 <form method="GET">
