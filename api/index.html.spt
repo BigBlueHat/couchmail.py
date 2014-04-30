@@ -27,7 +27,7 @@ if 'rows' in results:
 
 [---] via pystache
 <form method="GET">
-  <input name="q" />
+  <input name="q" value="{{qs.q}}" />
 </form>
 
 {{#results}}
