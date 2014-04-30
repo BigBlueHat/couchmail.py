@@ -41,7 +41,8 @@ if 'rows' in results:
 <ul>
 {{#results.rows}}
 <li><strong>{{fields.subject}}</strong><br />
-From: {{fields.from}}</li>
+From: {{fields.from}}<br />
+On: {{fields.full_date}}</li>
 {{/results.rows}}
 </ul>
 {{/results}}
