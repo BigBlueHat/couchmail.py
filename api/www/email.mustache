@@ -1,0 +1,14 @@
+<form method="GET">
+  <input name="q" value="{{qs.q}}" />
+</form>
+
+{{#results}}
+{{results.total_rows}} Search Results
+<ul>
+{{#results.rows}}
+<li><strong>{{fields.subject}}</strong><br />
+From: {{fields.from}}<br />
+On: {{fields.full_date}}</li>
+{{/results.rows}}
+</ul>
+{{/results}}
