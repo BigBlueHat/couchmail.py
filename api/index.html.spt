@@ -1,5 +1,6 @@
 import re
 from ConfigParser import ConfigParser
+from datetime import datetime
 
 from aspen.logging import log
 import requests
@@ -8,20 +9,28 @@ config = ConfigParser()
 config.read('../config.ini')
 server = config.get('couch', 'server')
 db = config.get('couch', 'db')
-url = ("{server}{db}/_design/couchmail/_search/mail"
-       "?counts=[%22subject%22,%20%22to%22,%20%22from%22]")\
+url = ("{server}{db}/_design/couchmail")\
     .format(server=server, db=db)
 
 [---]
 if qs and 'q' in qs:
-    url += "&q=" + qs['q']
+    url += ("/_search/mail?counts=[%22subject%22,%20%22to%22,%20%22from%22]"
+            "&q=" + qs['q'])
     log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
     results = requests.get(url).json()
 else:
-    results = {}
+    url += "/_view/by_date?reduce=false&limit=20&include_docs=true"
+    log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
+    results = requests.get(url).json()
 
 if 'rows' in results:
     for row in results['rows']:
+        if 'doc' in row:
+          row['fields'] = {}
+          row['fields']['subject'] = row['doc']['subject']
+          row['fields']['from'] = row['doc']['from']
+          row['fields']['full_date'] = datetime(*(row['doc']['date'][:6]))\
+            .isoformat()
         row['fields']['from'] = re.sub(r'(.*)<(.)(.*)@(.*)>', r'\1<\2...@\4>',
                                        row['fields']['from'])
 
