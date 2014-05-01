@@ -50,21 +50,6 @@ Now drilldown those results to just what I've posted:
 /couchdb-mailing-lists/_design/couchmail/_search/mail?q=fauxton&counts=["subject", "to", "from"]&drilldown=["from", "Benjamin Young <byoung@bigbluehat.com>"]
 ```
 
-### API (work-in-progress)
-
-The API is built using [aspen.io](http://aspen.io/) and it's sole purpose is to provide email obfuscation. If you don't need to obfuscate email addresses (as you're hosting this locally or some such), then don't bother with the API dir. ^_^
-
-Otherwise, run this:
-
-```
-$ cd api/
-$ pip install -r requirements.txt --allow-external Cheroot --allow-unverified Cheroot
-$ # sorry about the Cheroot stuff...
-$ python -m aspen.server
-```
-
-`http://localhost:8080/fauxton` (where `fauxton` is your favorite search terem) should get you some search results.
-
 ## License
 
 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
