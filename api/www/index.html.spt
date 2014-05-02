@@ -12,9 +12,16 @@ db = config.get('couch', 'db')
 url = ("{server}{db}/_design/couchmail")\
     .format(server=server, db=db)
 
+def getJSON(url):
+    if '@' in url:
+        log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
+    else:
+        log(url)
+    return requests.get(url).json()
+
 [---]
 # navigation
-years = requests.get(url + '/_view/by_date?descending=true&group_level=1').json()
+years = getJSON(url + '/_view/by_date?descending=true&group_level=1')
 if 'rows' in years:
   for row in years['rows']:
     row['year'] = row['key'][0]
@@ -22,12 +29,10 @@ if 'rows' in years:
 if qs and 'q' in qs:
     url += ("/_search/mail?counts=[%22subject%22,%20%22to%22,%20%22from%22]"
             "&q=" + qs['q'])
-    log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
-    results = requests.get(url).json()
+    results = getJSON(url)
 else:
     url += "/_view/by_date?reduce=false&descending=true&limit=20&include_docs=true"
-    log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
-    results = requests.get(url).json()
+    results = getJSON(url)
 
 if 'rows' in results:
     for row in results['rows']:

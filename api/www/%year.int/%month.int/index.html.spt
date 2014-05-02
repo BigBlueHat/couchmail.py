@@ -11,17 +11,24 @@ server = config.get('couch', 'server')
 db = config.get('couch', 'db')
 url = "{server}{db}/_design/couchmail".format(server=server, db=db)
 
+def getJSON(url):
+    if '@' in url:
+        log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
+    else:
+        log(url)
+    return requests.get(url).json()
+
 [---]
 year = path['year'] if 'year' in path else date.today().year
 month = path['month'] if 'month' in path else date.today().month
 
 # months for the current year
-_months = requests.get(url + '/_view/by_date?descending=true&group_level=2&startkey=[{year},13]&endkey=[{year},0]'.format(year=year)).json()
+_months = getJSON(url + '/_view/by_date?descending=true&group_level=2&startkey=[{year},13]&endkey=[{year},0]'.format(year=year))
 if 'rows' in _months:
   for row in _months['rows']:
     row['month'] = row['key'][1]
 
-years = requests.get(url + '/_view/by_date?descending=true&group_level=1').json()
+years = getJSON(url + '/_view/by_date?descending=true&group_level=1')
 if 'rows' in years:
   for row in years['rows']:
     row['year'] = row['key'][0]
@@ -36,8 +43,7 @@ url += ("/_search/mail?counts=[%22subject%22,%20%22to%22,%20%22from%22]"
 if qs and 'q' in qs:
     url += ' AND ' + qs['q']
 
-log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
-results = requests.get(url).json()
+results = getJSON(url)
 
 # obfuscate email addresses
 if 'rows' in results:
