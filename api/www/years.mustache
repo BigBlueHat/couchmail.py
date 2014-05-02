@@ -1,8 +1,12 @@
 {{#years}}
 <ul>
   {{#rows}}
-  <li><a href="/{{year}}/?q={{#qs}}{{q}}{{/qs}}">{{year}}</a> ({{value}})
-  {{> months}}
+  <li {{#months}}class="pure-menu pure-menu-open"{{/months}}>
+    <a href="/{{year}}/{{#qs}}?q={{q}}{{/qs}}" class="pure-menu-heading">
+      {{year}}
+      <span class="email-count">({{value}})</span></a>
+
+    {{> months}}
   </li>
   {{/rows}}
 </ul>

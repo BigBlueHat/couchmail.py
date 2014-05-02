@@ -41,4 +41,4 @@ if 'rows' in results:
                                        row['fields']['from'])
 
 [---] via pystache
-{{> email}}}
+{{> layout}}}
