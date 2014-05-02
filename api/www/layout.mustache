@@ -11,13 +11,15 @@
     </div>
 
     <div id="list" class="pure-u-1">
-      <div class="email-item pure-u">
+      <div class="email-item pure-g">
         <form class="pure-form" method="GET">
             <input name="q" value="{{qs.q}}" placeholder="Search" type="text" class="pure-input-rounded">
-            <button type="submit" class="pure-button">go</button>
         </form>
         {{#results}}
-        <div>{{total_rows}} Search Results</div>
+        <p class="pure-u">
+          <span class="email-name">{{total_rows}} Search Results</span>
+          {{#qs}}<a href="?">clear</a>{{/qs}}
+        </p>
         {{/results}}
       </div>
         {{#results}}
