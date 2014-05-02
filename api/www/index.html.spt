@@ -19,7 +19,7 @@ if qs and 'q' in qs:
     log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
     results = requests.get(url).json()
 else:
-    url += "/_view/by_date?reduce=false&limit=20&include_docs=true"
+    url += "/_view/by_date?reduce=false&descending=true&limit=20&include_docs=true"
     log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
     results = requests.get(url).json()
 
