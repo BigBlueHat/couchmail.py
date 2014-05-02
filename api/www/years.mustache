@@ -1,0 +1,9 @@
+{{#years}}
+<ul>
+  {{#rows}}
+  <li><a href="/{{year}}/?q={{#qs}}{{q}}{{/qs}}">{{year}}</a> ({{value}})
+  {{> months}}
+  </li>
+  {{/rows}}
+</ul>
+{{/years}}

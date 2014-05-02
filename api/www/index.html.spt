@@ -13,6 +13,12 @@ url = ("{server}{db}/_design/couchmail")\
     .format(server=server, db=db)
 
 [---]
+# navigation
+years = requests.get(url + '/_view/by_date?descending=true&group_level=1').json()
+if 'rows' in years:
+  for row in years['rows']:
+    row['year'] = row['key'][0]
+
 if qs and 'q' in qs:
     url += ("/_search/mail?counts=[%22subject%22,%20%22to%22,%20%22from%22]"
             "&q=" + qs['q'])
