@@ -36,18 +36,27 @@ if 'rows' in years:
     if row['year'] == year:
       row['months'] = _months
 
-url += ("/_search/mail?counts=[%22subject%22,%20%22to%22,%20%22from%22]"
-        "&q=date:[{year}{month} TO {year}{month}]")\
-        .format(year=year, month=month)
 
 if qs and 'q' in qs:
-    url += ' AND ' + qs['q']
+    url += ("/_search/mail?counts=[%22subject%22,%20%22to%22,%20%22from%22]"
+            "&q=date:[{year}{month} TO {year}{month}] AND {q}")\
+            .format(year=year, month=month, q=qs['q'])
+else:
+    url += ("/_view/by_date?descending=true&reduce=false&limit=20&include_docs=true"
+            "&startkey=[{year},{month_after}]&endkey=[{year},{month_before}]")\
+            .format(year=year, month_after=month+1, month_before=month-1)
 
 results = getJSON(url)
 
 # obfuscate email addresses
 if 'rows' in results:
     for row in results['rows']:
+        if 'doc' in row:
+          row['fields'] = {}
+          row['fields']['subject'] = row['doc']['subject']
+          row['fields']['from'] = row['doc']['from']
+          row['fields']['full_date'] = datetime(*(row['doc']['date'][:6]))\
+            .isoformat()
         row['fields']['from'] = re.sub(r'(.*)<(.)(.*)@(.*)>', r'\1<\2...@\4>',
                                        row['fields']['from'])
 
