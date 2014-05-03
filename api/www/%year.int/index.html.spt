@@ -59,6 +59,8 @@ if 'rows' in results:
             .isoformat()
         row['fields']['from'] = re.sub(r'(.*)<(.)(.*)@(.*)>', r'\1<\2...@\4>',
                                        row['fields']['from'])
+    if len(results['rows']) > 0:
+        message_id = '/' + results['rows'][0]['id'].replace('+', '%2B')
 
 [---] via pystache
 {{> layout}}

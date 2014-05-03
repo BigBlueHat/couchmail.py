@@ -1,2 +1,28 @@
+<script src="/js/vue.min.js"></script>
+<script type="text/javascript">
+var app = new Vue({
+  el: '#main',
+  data: {
+  {{#message_id}}message_id: "{{{.}}}"{{/message_id}}
+  },
+  created: function () {
+    this.$watch('message_id', function () {
+      this.fetchData();
+    });
+  },
+  methods: {
+    fetchData: function() {
+      var xhr = new XMLHttpRequest(),
+          self = this;
+      xhr.open('GET', self.message_id);
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.onload = function () {
+        self.message = JSON.parse(xhr.responseText);
+      }
+      xhr.send();
+    }
+  }
+});
+</script>
 </body>
 </html>
