@@ -25,7 +25,7 @@ year = path['year'] if 'year' in path else datetime.today().year
 _months = getJSON(url + '/_view/by_date?descending=true&group_level=2&startkey=[{year},13]&endkey=[{year},0]'.format(year=year))
 if 'rows' in _months:
   for row in _months['rows']:
-    row['month'] = row['key'][1]
+    row['month'] = '%02d' % row['key'][1]
 
 years = getJSON(url + '/_view/by_date?descending=true&group_level=1')
 if 'rows' in years:
