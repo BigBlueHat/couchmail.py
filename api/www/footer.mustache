@@ -1,6 +1,6 @@
 <script src="/js/vue.min.js"></script>
 <script type="text/javascript">
-var app = new Vue({
+var main = new Vue({
   el: '#main',
   data: {
   {{#message_id}}message_id: "{{{.}}}"{{/message_id}}
@@ -22,6 +22,16 @@ var app = new Vue({
       xhr.send();
     }
   }
+});
+Vue.component('email-item', {
+  methods: {
+    loadMessage: function(e) {
+      main.message_id = e.targetVM.$el.dataset.href;
+    }
+  }
+});
+var list = new Vue({
+  el: '#list'
 });
 </script>
 </body>
