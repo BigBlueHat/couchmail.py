@@ -14,6 +14,7 @@
     </div>
 
     <div id="list" class="pure-u-1">
+      {{#has_search}}
       <div class="email-item pure-g">
         <form class="pure-form" method="GET">
             <input name="q" value="{{qs.q}}" placeholder="Search" type="text" class="pure-input-rounded">
@@ -25,6 +26,7 @@
         </p>
         {{/results}}
       </div>
+      {{/has_search}}
         {{#results}}
         {{#rows}}
         <div class="email-item pure-g">

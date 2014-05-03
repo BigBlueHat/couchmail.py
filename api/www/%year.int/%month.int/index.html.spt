@@ -10,6 +10,7 @@ config.read('../../config.ini')
 server = config.get('couch', 'server')
 db = config.get('couch', 'db')
 url = "{server}{db}/_design/couchmail".format(server=server, db=db)
+has_search = True if '.cloudant.com' in server else False
 
 def getJSON(url):
     if '@' in url:
