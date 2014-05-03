@@ -1,6 +1,6 @@
 import re
 from ConfigParser import ConfigParser
-from datetime import date
+from datetime import datetime
 
 from aspen.logging import log
 import requests
@@ -19,7 +19,7 @@ def getJSON(url):
     return requests.get(url).json()
 
 [---]
-year = path['year'] if 'year' in path else date.today().year
+year = path['year'] if 'year' in path else datetime.today().year
 
 # months for the current year
 _months = getJSON(url + '/_view/by_date?descending=true&group_level=2&startkey=[{year},13]&endkey=[{year},0]'.format(year=year))
