@@ -29,7 +29,7 @@
       {{/has_search}}
         {{#results}}
         {{#rows}}
-        <div class="email-item pure-g" data-href="/{{{id}}}" v-component="email-item" v-on="click: loadMessage">
+        <div class="email-item pure-g" data-href="/{{{id}}}" v-component="email-item" v-on="click: loadMessage" v-class="email-item-unread: selected">
             <div class="pure-u">
                 <h5 class="email-name">{{fields.from}}</h5>
                 <h4 class="email-subject">{{fields.subject}}</h4>

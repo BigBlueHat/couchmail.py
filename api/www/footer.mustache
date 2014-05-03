@@ -24,6 +24,13 @@ var main = new Vue({
   }
 });
 Vue.component('email-item', {
+  computed: {
+    selected: {
+      $get: function() {
+        return main.message_id == this.$el.dataset.href;
+      }
+    }
+  },
   methods: {
     loadMessage: function(e) {
       main.message_id = e.targetVM.$el.dataset.href;
