@@ -7,7 +7,7 @@ from aspen.logging import log
 import requests
 
 config = ConfigParser()
-config.read('../../config.ini')
+config.read('../config.ini')
 server = config.get('couch', 'server')
 db = config.get('couch', 'db')
 url = ("{server}{db}").format(server=server, db=db)

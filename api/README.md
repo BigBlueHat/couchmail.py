@@ -5,10 +5,8 @@ The API is built using [aspen.io](http://aspen.io/) and it's sole purpose is to 
 It has also begone to grow a UI...because...
 
 ```
-$ cd api/
-$ pip install -r requirements.txt --allow-external Cheroot --allow-unverified Cheroot
-$ # sorry about the Cheroot stuff...
-$ ./serve.py
+$ pip install -r requirements.txt
+$ ./serve.sh
 ```
 
 `http://localhost:8080/?q=fauxton` (where `fauxton` is your favorite search term) should get you some search results.

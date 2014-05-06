@@ -6,7 +6,7 @@ from aspen.logging import log
 import requests
 
 config = ConfigParser()
-config.read('../../config.ini')
+config.read('../config.ini')
 server = config.get('couch', 'server')
 db = config.get('couch', 'db')
 url = ("{server}{db}/_design/couchmail").format(server=server, db=db)
@@ -48,4 +48,4 @@ if 'rows' in results:
         message_id = '/' + results['rows'][0]['id'].replace('+', '%2B')
 
 [---] via pystache
-{{> layout}}}
+{{> layout}}
