@@ -17,6 +17,9 @@ It *should* export the number of emails you specify,
 store them by their `Message-ID` header value (or
 timestamp...if `Message-ID` is missing).
 
+**Note:** Checkout the `api` directories `README` if you want
+to setup a basic email address obfuscator and UI.
+
 ## Design Doc (aka CouchApp)
 
     $ cd couchapp
