@@ -8,13 +8,13 @@ import requests
 config = ConfigParser()
 config.read('../config.ini')
 server = config.get('couch', 'server')
-db = config.get('couch', 'db')
+db = config.get('couch', 'db').replace('/', '%2F')
 url = ("{server}{db}/_design/couchmail").format(server=server, db=db)
 has_search = True if '.cloudant.com' in server else False
 
 def getJSON(url):
     if '@' in url:
-        log('https://' + url.split('@')[1:2][0].replace(' ', '+'))
+        log('http://' + url.split('@')[1:2][0].replace(' ', '+'))
     else:
         log(url)
     return requests.get(url).json()
