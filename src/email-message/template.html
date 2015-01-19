@@ -1,0 +1,17 @@
+<div class="email-content">
+  <div class="email-content-header pure-g">
+      <div class="pure-u-1">
+          <h1 class="email-content-title">{{subject}}</h1>
+          <p class="email-content-subtitle">
+              From <a v-attr="href: 'mailto:' + from">{{from}}</a>
+              at <span>{{date}}</span>
+          </p>
+      </div>
+  </div>
+
+  <div class="email-content-body">
+    <pre>
+    {{message}}
+    </pre>
+  </div>
+</div>

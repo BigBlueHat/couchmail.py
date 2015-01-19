@@ -1,0 +1,49 @@
+{{> header}}
+<div id="layout" class="content pure-g">
+    <div id="nav" class="pure-u">
+        <a href="#" class="nav-menu-button">Menu</a>
+
+        <div class="nav-inner">
+            <div class="pure-menu pure-menu-open">
+              <ul>
+                <li><a href="/" class="pure-menu-heading">Latest</a></li>
+              </ul>
+              {{> years}}
+            </div>
+        </div>
+    </div>
+
+    <div id="list" class="pure-u-1">
+      {{#has_search}}
+      <div class="email-item pure-g">
+        <form class="pure-form" method="GET">
+            <input name="q" value="{{qs.q}}" placeholder="Search" type="text" class="pure-input-rounded">
+        </form>
+        {{#results}}
+        <p class="pure-u">
+          <span class="email-name">{{total_rows}} Search Results</span>
+          {{#qs}}<a href="?">clear</a>{{/qs}}
+        </p>
+        {{/results}}
+      </div>
+      {{/has_search}}
+        {{#results}}
+        {{#rows}}
+        <div class="email-item pure-g" data-href="/{{{id}}}" v-component="email-item" v-on="click: loadMessage" v-class="email-item-unread: selected">
+            <div class="pure-u">
+                <h5 class="email-name">{{fields.from}}</h5>
+                <h4 class="email-subject">{{fields.subject}}</h4>
+                <p class="email-desc">
+                {{fields.full_date}}
+                </p>
+            </div>
+        </div>
+        {{/rows}}
+        {{/results}}
+    </div>
+
+    <div id="main" class="pure-u-1">
+      {{> message}}
+    </div>
+</div>
+{{> footer}}

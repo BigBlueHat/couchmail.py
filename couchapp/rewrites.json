@@ -1,0 +1,18 @@
+[
+  {
+    "from": "/",
+    "to": "index.html"
+  },
+  {
+    "from": ":message_id",
+    "to": "../../:message_id"
+  },
+  {
+    "from": "js/:file.js",
+    "to": "js/:file.js"
+  },
+  {
+    "from": "css/:file.css",
+    "to": "css/:file.css"
+  }
+]

@@ -1,0 +1,11 @@
+<div class="email-item pure-g"
+  v-class="email-item-unread: selected"
+  v-on="click: loadMessage()">
+  <div class="pure-u">
+      <h5 class="email-name">{{email.from}}</h5>
+      <h4 class="email-subject">{{email.subject}}</h4>
+      <p class="email-desc">
+        {{email.full_date}}
+      </p>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+{
+  "name": "CouchMail",
+  "version": "0.1.0",
+  "description": "Email in CouchDB (or PouchDB or Cloudant or...)",
+  "author": "BigBlueHat",
+  "license": "Apache License 2.0",
+  "repository": "https://github.com/BigBlueHat/couchmail.py.git",
+  "main": "src/main.js",
+  "dependencies": {
+    "vue": "~0.11.4",
+    "pouchdb": "~3.2.0"
+  },
+  "devDependencies": {
+    "watchify": "~0.6.1",
+    "partialify": "~3.0.0",
+    "insert-css": "~0.1.1",
+    "mocha": "~1.20.0"
+  },
+  "scripts": {
+    "dev": "browserify -e src/main.js -t partialify -o couchapp/_attachments/js/bundle.js",
+    "docs": "cd _docs && couchapp pushdocs . default",
+    "test": "mocha --ui bdd",
+    "test-browser": "browserify -t partialify test/*.js --exclude test-bundle.js > test/test-bundle.js"
+  }
+}

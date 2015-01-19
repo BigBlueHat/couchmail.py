@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <base href="http://localhost:5984/couchdb-mailing-lists/_design/couchmail/_rewrite/" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Email archives on the CouchDB">
+  <title>CouchMail</title>
+  <link rel="stylesheet" href="css/pure-min.css">
+  <!--[if lte IE 8]>
+      <link rel="stylesheet" href="css/email-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+      <link rel="stylesheet" href="css/email.css">
+  <!--<![endif]-->
+  <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+  <![endif]-->
+  <style type="text/css">
+  .email-item {cursor:pointer}
+  .email-item:hover {background: #EEE}
+  </style>
+</head>
+<body>
+
+
+  <div id="layout" class="content pure-g">
+    <div id="nav" class="pure-u">
+        <a href="#" class="nav-menu-button">Menu</a>
+
+        <div class="nav-inner">
+          <div class="pure-menu pure-menu-open">
+            <ul>
+              <li><a href="/" class="pure-menu-heading">Latest</a></li>
+            </ul>
+            <year-list v-ref="years"></year-list>
+          </div>
+        </div>
+    </div>
+
+    <div id="list" class="pure-u-1">
+      <div v-if="has_search" class="email-item pure-g">
+        <form class="pure-form" method="GET">
+            <input name="q" value="{{qs.q}}" placeholder="Search" type="text" class="pure-input-rounded">
+        </form>
+        <p v-repeat="results" class="pure-u">
+          <span class="email-name">{{total_rows}} Search Results</span>
+          <a v-if="qs" href="?">clear</a>
+        </p>
+      </div>
+
+      <email-item v-repeat="email: emails"></email-item>
+    </div>
+
+    <div id="main" class="pure-u-1">
+      <email-message v-with="message"></email-message>
+    </div>
+  </div>
+
+<script src="js/bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<ul>
+<li v-repeat="years" v-class="pure-menu: months, pure-menu-open: months">
+  <a href="/{{year}}/?q={{qs}}" class="pure-menu-heading">
+    {{year}}
+    <span class="email-count">({{count}})</span></a>
+    <!--month-list
+      v-if="current == year"
+      v-with="year: current"
+      v-ref="months">
+      {{year}}
+      </month-list-->
+  </li>
+</ul>

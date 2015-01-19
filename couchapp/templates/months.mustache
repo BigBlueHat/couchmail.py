@@ -1,0 +1,11 @@
+{{#months}}
+<ul>
+  <li class="pure-menu-separator"></li>
+  {{#rows}}
+  <li><a href="/{{year}}/{{month}}/{{#qs}}?q={{q}}{{/qs}}">{{month}}
+      <span class="email-count">({{value}})</span></a>
+  </li>
+  {{/rows}}
+  <li class="pure-menu-separator"></li>
+</ul>
+{{/months}}
