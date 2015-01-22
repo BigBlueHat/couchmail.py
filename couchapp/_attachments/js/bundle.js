@@ -21832,7 +21832,7 @@ module.exports = {
 
 
 },{"./template.html":137}],137:[function(require,module,exports){
-module.exports = '<div class="email-item pure-g"\n  v-class="email-item-unread: selected"\n  v-on="click: loadMessage()">\n  <div class="pure-u">\n      <h5 class="email-name">{{email.from}}</h5>\n      <h4 class="email-subject">{{email.subject}}</h4>\n      <p class="email-desc">\n        {{email.full_date}}\n      </p>\n  </div>\n</div>\n';
+module.exports = '<div class="email-item pure-g"\n  v-class="email-item-unread: selected"\n  v-on="click: loadMessage()"\n  data-message-id="{{email._id}}">\n  <div class="pure-u">\n      <h5 class="email-name">{{email.from}}</h5>\n      <h4 class="email-subject">{{email.subject}}</h4>\n      <p class="email-desc">\n        {{email.full_date}}\n      </p>\n  </div>\n</div>\n';
 },{}],138:[function(require,module,exports){
 module.exports = {
   template: require('./template.html'),

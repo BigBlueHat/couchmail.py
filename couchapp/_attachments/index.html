@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Email archives on the CouchDB">
   <title>CouchMail</title>
+  <link rel="stylesheet" href="../../annotator/css/annotator.css">
   <link rel="stylesheet" href="css/pure-min.css">
   <!--[if lte IE 8]>
       <link rel="stylesheet" href="css/email-old-ie.css">
@@ -57,6 +58,57 @@
     </div>
   </div>
 
-<script src="js/bundle.js"></script>
+  <script src="js/bundle.js"></script>
+  <!-- TODO: stop double loading pouchdb.js -->
+  <script src="../../annotator/pouchdb.js"></script>
+  <script src="../../annotator/annotator.js"></script>
+  <script src="../../annotator/annotator-pouchdb.js"></script>
+  <script>
+    var Annotator = require('annotator');
+    var PouchDBStorage = require('annotator-pouchdb').PouchDBStorage;
+    var db = new PouchDB(location.protocol + '//' + location.hostname + ':'
+        + location.port + '/' + location.pathname.split('/')[1]);
+    var elem = document.getElementById('main');
+    var anno = new Annotator(elem);
+    var annotations = [];
+    var Hi = new Annotator.UI.Highlighter();
+
+    anno.addPlugin(function() {
+      return {
+        onBeforeAnnotationCreated: function(annotation) {
+          annotation.uri = decodeURIComponent(CouchMail.message_id);
+        },
+        onAnnotationsLoaded: function(anns) {
+          annotations = anns;
+        }
+      }
+    });
+    anno.setStorage(function() {
+      var ddoc = {
+        _id: '_design/annotator',
+        views: {
+          annotations: {
+            map: function(doc) {
+              if ('uri' in doc && 'ranges' in doc) {
+                emit(doc.uri, 1);
+              }
+            }.toString()
+          }
+        }
+      };
+      db.put(ddoc)
+        .catch(function(err) {
+          // likely this is "just" a conflict...
+          // TODO: if the ddoc changes, make this work
+          console.error(err);
+        });
+      return new PouchDBStorage(db);
+    });
+    CouchMail.$watch('message_id', function() {
+      Hi.undrawAll(annotations.results);
+      anno.registry.annotations.load({key: decodeURIComponent(CouchMail.message_id)});
+    });
+  </script>
+
 </body>
 </html>
