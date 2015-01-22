@@ -5,6 +5,7 @@
 License: Apache 2.0 - http://opensource.org/licenses/Apache-2.0
 """
 
+import argparse
 import calendar
 import ConfigParser
 from datetime import datetime
@@ -18,8 +19,13 @@ from dateutil.parser import parse
 from couchdb import Server, ResourceConflict, ResourceNotFound
 from couchmail import archive_msg, headers, truly_unique_id
 
+argparser = argparse.ArgumentParser()
+argparser.add_argument('config_file', type=file,
+        help="Config INI file. See `config.sample.ini` for info.")
+args = argparser.parse_args()
+
 config = ConfigParser.RawConfigParser()
-config.read('config.ini')
+config.readfp(args.config_file)
 
 # CouchDB/Cloudant setup
 server = Server(config.get('couch', 'server'))
