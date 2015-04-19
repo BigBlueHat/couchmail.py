@@ -17,12 +17,16 @@ window.CouchMail = new Vue({
     emails: []
   },
   watch: {
-    message_id: function () {
-      this.fetchData();
-    }
+    message_id: 'fetchData',
+    year: 'fetchEmails'
   },
   created: function() {
     this.fetchEmails();
+  },
+  events: {
+    currentYear: function(year) {
+      this.year = year;
+    }
   },
   methods: {
     fetchData: function() {
@@ -37,16 +41,22 @@ window.CouchMail = new Vue({
     },
     fetchEmails: function() {
       var self = this;
-      db.query('couchmail/by_date',
-          {
-            reduce: false,
-            descending: true, limit: 20,
-            include_docs: true
-          })
+      var params = {
+        reduce: false,
+        descending: true,
+        limit: 20,
+        include_docs: true
+      };
+      if (self.year) {
+        params.startkey = [self.year, 13];
+      }
+      self.emails = [];
+      db.query('couchmail/by_date', params)
         .then(function(rv) {
           for (var i = 0; i < rv.rows.length; i++) {
             self.emails.push(rv.rows[i]['doc']);
           }
+          self.message_id = self.emails[0]._id;
         });
     }
   },

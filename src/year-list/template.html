@@ -1,6 +1,6 @@
 <ul>
 <li v-repeat="years" v-class="pure-menu: months, pure-menu-open: months">
-  <a href="/{{year}}/?q={{qs}}" class="pure-menu-heading">
+  <a class="pure-menu-heading" v-on="click: current = year">
     {{year}}
     <span class="email-count">({{count}})</span></a>
     <!--month-list

@@ -1,3 +1,5 @@
 function(doc) {
-  emit(doc.date, doc.subject);
+  if ('date' in doc && 'subject' in doc) {
+    emit(doc.date, doc.subject);
+  }
 }

@@ -14,6 +14,11 @@ module.exports = {
   created: function() {
     this.fetchData();
   },
+  watch: {
+    current: function() {
+      this.$dispatch('currentYear', this.current);
+    }
+  },
   methods: {
     fetchData: function() {
       var self = this;

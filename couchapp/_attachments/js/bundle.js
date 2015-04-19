@@ -21865,12 +21865,16 @@ window.CouchMail = new Vue({
     emails: []
   },
   watch: {
-    message_id: function () {
-      this.fetchData();
-    }
+    message_id: 'fetchData',
+    year: 'fetchEmails'
   },
   created: function() {
     this.fetchEmails();
+  },
+  events: {
+    currentYear: function(year) {
+      this.year = year;
+    }
   },
   methods: {
     fetchData: function() {
@@ -21885,16 +21889,22 @@ window.CouchMail = new Vue({
     },
     fetchEmails: function() {
       var self = this;
-      db.query('couchmail/by_date',
-          {
-            reduce: false,
-            descending: true, limit: 20,
-            include_docs: true
-          })
+      var params = {
+        reduce: false,
+        descending: true,
+        limit: 20,
+        include_docs: true
+      };
+      if (self.year) {
+        params.startkey = [self.year, 13];
+      }
+      self.emails = [];
+      db.query('couchmail/by_date', params)
         .then(function(rv) {
           for (var i = 0; i < rv.rows.length; i++) {
             self.emails.push(rv.rows[i]['doc']);
           }
+          self.message_id = self.emails[0]._id;
         });
     }
   },
@@ -21966,6 +21976,11 @@ module.exports = {
   created: function() {
     this.fetchData();
   },
+  watch: {
+    current: function() {
+      this.$dispatch('currentYear', this.current);
+    }
+  },
   methods: {
     fetchData: function() {
       var self = this;
@@ -21986,8 +22001,6 @@ module.exports = {
   }
 }
 
-
-
 },{"./template.html":143,"pouchdb":32}],143:[function(require,module,exports){
-module.exports = '<ul>\n<li v-repeat="years" v-class="pure-menu: months, pure-menu-open: months">\n  <a href="/{{year}}/?q={{qs}}" class="pure-menu-heading">\n    {{year}}\n    <span class="email-count">({{count}})</span></a>\n    <!--month-list\n      v-if="current == year"\n      v-with="year: current"\n      v-ref="months">\n      {{year}}\n      </month-list-->\n  </li>\n</ul>\n';
+module.exports = '<ul>\n<li v-repeat="years" v-class="pure-menu: months, pure-menu-open: months">\n  <a class="pure-menu-heading" v-on="click: current = year">\n    {{year}}\n    <span class="email-count">({{count}})</span></a>\n    <!--month-list\n      v-if="current == year"\n      v-with="year: current"\n      v-ref="months">\n      {{year}}\n      </month-list-->\n  </li>\n</ul>\n';
 },{}]},{},[140])
