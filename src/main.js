@@ -30,14 +30,12 @@ window.CouchMail = new Vue({
   },
   methods: {
     fetchData: function() {
-      var xhr = new XMLHttpRequest(),
-          self = this;
-      xhr.open('GET', self.message_id);
-      xhr.setRequestHeader('Accept', 'application/json');
-      xhr.onload = function () {
-        self.message = JSON.parse(xhr.responseText);
-      }
-      xhr.send();
+      var self = this;
+      db.get(self.message_id)
+        .then(function(resp) {
+          self.message = resp;
+        }
+      );
     },
     fetchEmails: function() {
       var self = this;
