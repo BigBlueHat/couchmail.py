@@ -29,7 +29,10 @@ config.readfp(args.config_file)
 
 # CouchDB/Cloudant setup
 server = Server(config.get('couch', 'server'))
-couch = server[config.get('couch', 'db')]
+try:
+    couch = server[config.get('couch', 'db')]
+except ResourceNotFound:
+    couch = server.create(config.get('couch', 'db'))
 
 # IMAP setup
 host = config.get('imap', 'host')
