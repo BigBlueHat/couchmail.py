@@ -1,4 +1,4 @@
 chardet
 couchdb
-easyimap
+easyimap>=0.6.0
 python-dateutil
