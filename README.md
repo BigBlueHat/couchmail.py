@@ -22,10 +22,15 @@ to setup a basic email address obfuscator and UI.
 
 ## Design Doc (aka CouchApp)
 
-    $ cd couchapp
-    $ couchapp push . http://user:pass@localhost:5984/mail
+Publishing the Design Doc (`_design/couchmail`) to CouchDB is handled by a
+`gulp` script, so it's as easy as...
 
-Note: `erica` should also work.
+    $ cp config.json.sample config.json
+    $ # customize the config.json file
+    $ npm install
+    $ gulp
+
+Note: `couchapp.py` and `erica` should also work, but YMMV.
 
 #### Full-Text Search
 
