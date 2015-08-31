@@ -1,4 +1,5 @@
 venv
 *.pyc
 config.ini
+config.json
 _design/couchmail/_attachments/js/bundle.js
