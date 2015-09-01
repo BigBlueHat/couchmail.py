@@ -3,6 +3,9 @@
 **Very** early stage email archiver for Apache CouchDB
 and Cloudant.
 
+Looks like this (so far):
+![CouchMail Screenshot](screenshot.png)
+
 ## Installation
 
     $ pip install -r requirements.txt
