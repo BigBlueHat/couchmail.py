@@ -4,14 +4,12 @@
           <h1 class="email-content-title">{{subject}}</h1>
           <p class="email-content-subtitle">
               From <a v-attr="href: 'mailto:' + from">{{from}}</a>
-              at <span>{{date}}</span>
+              at <span>{{dateFormatted}}</span>
           </p>
       </div>
   </div>
 
   <div class="email-content-body">
-    <pre>
-    {{message}}
-    </pre>
+    <pre>{{msg}}</pre>
   </div>
 </div>

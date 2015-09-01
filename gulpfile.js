@@ -29,6 +29,10 @@ gulp.task('couchmail', function() {
     transform: [partialify]
   });
 
+  // copy moment.js into design doc views/lib folder
+  gulp.src(['./node_modules/moment/moment.js'])
+    .pipe(gulp.dest('./_design/couchmail/views/lib/'));
+
   return b.bundle()
     .pipe(source('bundle.js'))
     .pipe(gulp.dest('./_design/couchmail/_attachments/js/'));
