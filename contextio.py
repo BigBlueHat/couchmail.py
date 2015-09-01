@@ -47,7 +47,17 @@ address = config.get('context.io', 'address')
 # 2.0 API endpoint
 api_url = "https://api.context.io/2.0/"
 
+def newest_archived():
+    results = couch.view('couchmail/by_timestamp', None,
+                         limit=1, reduce=False, descending=True)
+    for row in results:
+        return row['key']
 
+def oldest_archived():
+    results = couch.view('couchmail/by_timestamp', None,
+                         limit=1, reduce=False)
+    for row in results:
+        return row['key']
 
 def message_to_doc(message):
     doc = message
@@ -83,7 +93,7 @@ if __name__ == '__main__':
     # get the most recent messages for the account
     messages = contextio.get(account['resource_url'] + '/messages',
         params={'include_body': 1, 'include_headers': 1,'include_source': 1,
-            'limit': amount})
+            'limit': amount, 'date_before': oldest_archived()})
     for msg in messages.json():
         msg_id = msg['email_message_id']
         try:
