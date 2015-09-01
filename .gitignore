@@ -3,3 +3,4 @@ venv
 config.ini
 config.json
 _design/couchmail/_attachments/js/bundle.js
+node_modules

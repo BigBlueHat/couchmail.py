@@ -5,11 +5,23 @@ and Cloudant.
 
 ## Installation
 
-Copy `config.sample.ini` to `config.ini`.
-Customize it.
-
     $ pip install -r requirements.txt
-    $ python import.py
+
+### IMAP via easyimap.py
+
+    $ cp config.sample.ini account-name.ini
+    $ # customize the new .ini file
+    $ python import.py account-name.ini
+
+### [Context.io](http://context.io/)
+
+This requires a Context.io Developer Account. Visit the
+[Settings](https://console.context.io/#settings) section
+of your account and get the API key & secret, then...
+
+    $ cp config.contextio.sample.ini account-name.ini
+    $ # customize the new .ini file
+    $ python contextio.py account-name.ini
 
 Hope for the best!
 

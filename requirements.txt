@@ -2,3 +2,5 @@ chardet
 couchdb
 easyimap>=0.6.0
 python-dateutil
+requests
+requests_oauthlib
