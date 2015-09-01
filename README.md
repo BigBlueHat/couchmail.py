@@ -10,15 +10,17 @@ Looks like this (so far):
 
     $ pip install -r requirements.txt
 
-### IMAP via easyimap.py
+#### IMAP via easyimap.py
+
+`import.py` uses IMAP to connect to the mail server. See the Context.IO option below for something more...resilient.
 
     $ cp config.sample.ini account-name.ini
     $ # customize the new .ini file
     $ python import.py account-name.ini
 
-### [Context.io](http://context.io/)
+#### [Context.IO](http://context.io/)
 
-This requires a Context.io Developer Account. Visit the
+This option requires a Context.IO Developer Account. Visit the
 [Settings](https://console.context.io/#settings) section
 of your account and get the API key & secret, then...
 
