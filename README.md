@@ -1,7 +1,8 @@
 # couchmail.py
 
-**Very** early stage email archiver for Apache CouchDB
-and Cloudant.
+**Very** early stage email archiver for
+[Apache CouchDB](http://couchdb.apache.org)
+and [Cloudant](http://cloudant.com/).
 
 Looks like this (so far):
 ![CouchMail Screenshot](screenshot.png)
@@ -10,13 +11,15 @@ Looks like this (so far):
 
     $ pip install -r requirements.txt
 
-#### IMAP via easyimap.py
+#### Setup Apache CouchDB or Cloudant
 
-`import.py` uses IMAP to connect to the mail server. See the Context.IO option below for something more...resilient.
+Publishing the Design Doc / CouchApp to CouchDB is handled by a
+`gulp` script, so it's as easy as...
 
-    $ cp config.sample.ini account-name.ini
-    $ # customize the new .ini file
-    $ python import.py account-name.ini
+    $ cp config.json.sample config.json
+    $ # customize the config.json file
+    $ npm install
+    $ gulp
 
 #### [Context.IO](http://context.io/)
 
@@ -37,25 +40,26 @@ timestamp...if `Message-ID` is missing).
 **Note:** Checkout the `api` directories `README` if you want
 to setup a basic email address obfuscator and UI.
 
-## Design Doc (aka CouchApp)
+#### IMAP via easyimap.py
 
-Publishing the Design Doc (`_design/couchmail`) to CouchDB is handled by a
-`gulp` script, so it's as easy as...
+`import.py` uses IMAP to connect to the mail server. See the Context.IO option below for something more...resilient.
 
-    $ cp config.json.sample config.json
-    $ # customize the config.json file
-    $ npm install
-    $ gulp
+    $ cp config.sample.ini account-name.ini
+    $ # customize the new .ini file
+    $ python import.py account-name.ini
 
-Note: `couchapp.py` and `erica` should also work, but YMMV.
 
 #### Full-Text Search
 
-The Design Doc includes basic MapReduce for counting things (see Futon, Fauxton, or the Cloudant Dashboard for more).
+The Design Doc includes basic MapReduce for counting things (see Futon,
+Fauxton, or the Cloudant Dashboard for more). The UI for this is still in the
+works--stay tuned! :radio:
 
-It also includes some [Cloudant](http://cloudant.com/) specific Full-Text Search indexes. These indexes let you search email addresses, subject lines, and message bodies.
+It also includes some [Cloudant](http://cloudant.com/) specific Full-Text
+Search indexes. These indexes let you search email addresses, subject lines,
+and message bodies.
 
-Here are some examples…
+Here are some examples...
 
 Search for "fauxton":
 
