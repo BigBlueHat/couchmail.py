@@ -57,7 +57,7 @@ if __name__ == '__main__':
     ids = imapper.listids(amount)
     for id in ids:
         msg = imapper.mail(id, include_raw=True)
-        unique_id = truly_unique_id(headers(msg))
+        unique_id = truly_unique_id(msg)
         try:
             current_doc = couch[unique_id]
             if should_skip:

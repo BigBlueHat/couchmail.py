@@ -30,17 +30,19 @@ def parts(attachments):
                 'data': b64encode(data)}
     return parts
 
-def truly_unique_id(headers):
-    if 'message-id' in headers:
-        unique_id = headers['message-id']
+def truly_unique_id(msg):
+    # TODO: check `date` header existence?
+    if msg.message_id:
+        unique_id = msg.message_id.strip()
     else:
+        dt = parse(msg.date)
         unique_id = calendar.timegm(dt.timetuple())
     return unique_id
 
 def archive_msg(couch, msg):
     dt = parse(msg.date)
     hdrs = headers(msg)
-    doc_id = truly_unique_id(hdrs)
+    doc_id = truly_unique_id(msg)
 
     base_doc = {'_id': doc_id,
            'headers': hdrs,
