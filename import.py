@@ -45,7 +45,7 @@ mailbox = config.get('imap', 'mailbox')
 
 if __name__ == '__main__':
     print 'Connecting...'
-    imapper = easyimap.connect(host, user, password, mailbox, read_only=True)
+    imapper = easyimap.connect(host, user, password, mailbox, read_only=True, ssl=True, port=993)
     print 'Connected. Couple more questions...'
     amount = int(raw_input('How many mail items would you like to archive? '))
     should_skip = raw_input('Skip mail already archived (y/n)? ')
