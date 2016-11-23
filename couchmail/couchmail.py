@@ -63,8 +63,7 @@ def archive_msg(couch, msg):
     # Add the raw message content for "auditing"
     doc['_attachments'] = parts(msg.attachments)
     doc['_attachments']['raw.eml'] = {
-            'content_type': msg.content_type[:msg.content_type.find(';')] \
-                    if msg.content_type else 'text/plain',
+            'content_type': 'message/rfc822',
             'data': b64encode(msg.raw)}
 
     if doc_id in couch:
